@@ -18,3 +18,34 @@ exports.create = async (req,res) =>{
     }
 }
 
+// TotalRevenue
+
+exports.TotalRevenue = async (req,res) =>{
+    try{
+
+        const TotalRevenue = await salesModel.aggregate([
+            {
+                $group : {
+                    _id : null,
+                    total : {
+                        $sum : {
+                            $multiply : [
+                                "$quantity" , "price"
+                            ]
+                        }
+                    }
+                }
+            }
+        ])
+        res.status(200).json({
+            status : "success",
+            totalRevenue : TotalRevenue["0"].total
+        })
+
+    }catch(e){
+        res.status(500).json({
+            status : "fail",
+            data : e.toString()
+        })
+    }
+}
