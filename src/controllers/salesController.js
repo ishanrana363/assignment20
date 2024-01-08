@@ -144,6 +144,78 @@ exports.averagePrice = async (req,res) =>{
 
 
 
+// revenue-by-month
+exports.revenueByMonth =  async (req,res) =>{
+    try {
+        const revenueByMonth = await salesModel.aggregate([
+            {
+                $group: {
+                    _id: {
+                        year: { $year: '$date' },
+                        month: { $month: '$date' },
+                    },
+                    total : {
+                        $sum : {
+                            $multiply : [ "$price", "$quantity" ]
+                        }
+                    }
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    year: '$_id.year',
+                    month: '$_id.month',
+                    totalRevenue: 1,
+                },
+            },
+        ]);
+
+        res.json(revenueByMonth);
+    } catch (e) {
+        res.status(500).json({
+            status : "fail",
+            data: e.toString()
+        })
+    }
+}
+
+//sales/highest-quantity-sold
+exports.highestQuantitySold  = async (req, res) => {
+    try {
+        const highestQuantitySold = await salesModel.aggregate([
+            {
+                $group: {
+                    _id: {
+                        date: '$date',
+                    },
+                    maxQuantity: { $max: '$quantity' },
+                    product: { $first: '$product' },
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    date: '$_id.date',
+                    product: 1,
+                    maxQuantity: 1,
+                },
+            },
+        ]);
+
+        res.json(highestQuantitySold);
+    }catch (e) {
+
+        res.status(500).json({
+            status : "fail",
+            data: e.toString()
+        })
+    }
+}
+
+
+
+
 
 
 

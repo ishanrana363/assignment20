@@ -11,6 +11,9 @@ router.get("/sales/total-revenue", salesController.TotalRevenue);
 router.get("/sales/quantity-by-product", salesController.quantityByProduct);
 router.get("/sales/top-products", salesController.topProducts);
 router.get("/sales/average-price", salesController.averagePrice);
+router.get("/sales/revenue-by-month", salesController.revenueByMonth);
+router.get("/sales/highest-quantity", salesController.highestQuantitySold);
+
 
 
 module.exports = router
