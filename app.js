@@ -7,7 +7,6 @@ const cors = require("cors")
 const mongoSanitize = require('express-mongo-sanitize');
 var cookieParser = require('cookie-parser')
 const mongoose = require('mongoose');
-const path = require("path");
 
 
 
@@ -65,6 +64,11 @@ async function main() {
 }
 main().catch(err => console.log(err));
 
+// api file import
+
+const routes = require("./src/routes/api")
+
+app.use("/api/v1",routes)
 
 
 
