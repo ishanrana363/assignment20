@@ -7,6 +7,7 @@ const salesController = require("../controllers/salesController")
 // sales api
 
 router.post("/create",salesController.create);
-router.get("/sales/total-revenue", salesController.TotalRevenue)
+router.get("/sales/total-revenue", salesController.TotalRevenue);
+router.get("/sales/quantity-by-product", salesController.quantityByProduct);
 
 module.exports = router

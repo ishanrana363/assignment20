@@ -49,3 +49,67 @@ exports.TotalRevenue = async (req,res) =>{
         })
     }
 }
+
+//quantity-by-product
+
+exports.quantityByProduct = async (req,res) =>{
+    try {
+        const quantityByProduct = await salesModel.aggregate([
+            {
+                $group : {
+                    _id : "$product",
+                    totalQuantity : {
+                        $sum : "$quantity"
+                    }
+                }
+            }
+        ])
+        res.status(200).json({
+            status : "success",
+            totalQuantity : quantityByProduct
+        })
+    }catch (e){
+        res.status(200).json({
+            status : "fail",
+            data : e.toString()
+        })
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
