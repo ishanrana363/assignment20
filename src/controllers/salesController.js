@@ -213,6 +213,30 @@ exports.highestQuantitySold  = async (req, res) => {
     }
 }
 
+// ... (previous code)
+
+// sales department-salary-expense
+ exports.departmentSalaryExpense = async (req, res) => {
+     try {
+         const departmentSalaryExpense = await salesModel.aggregate([
+             {
+                 $group: {
+                     _id: '$department',
+                     totalSalaryExpense: { $sum: '$price' },
+                 },
+             },
+         ]);
+         res.json(departmentSalaryExpense);
+     }catch (e) {
+
+         res.status(500).json({
+             status : "fail",
+             data: e.toString()
+         })
+     }
+ }
+
+
 
 
 

@@ -13,6 +13,8 @@ router.get("/sales/top-products", salesController.topProducts);
 router.get("/sales/average-price", salesController.averagePrice);
 router.get("/sales/revenue-by-month", salesController.revenueByMonth);
 router.get("/sales/highest-quantity", salesController.highestQuantitySold);
+router.get("/sales/department-salary", salesController.departmentSalaryExpense);
+
 
 
 
