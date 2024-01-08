@@ -76,6 +76,72 @@ exports.quantityByProduct = async (req,res) =>{
     }
 }
 
+// top-products
+
+exports.topProducts = async (req,res) =>{
+    try {
+        let topProducts = await salesModel.aggregate([
+            {
+                $group : {
+                    _id : " $product ",
+                    total : {
+                        $sum : {
+                            $multiply : [
+                                "$quantity" , "price"
+                            ]
+                        }
+                    }
+
+                }
+            },
+            {
+                $sort : {
+                    total : -1
+                }
+            },
+            {
+                $limit : 5
+            },
+        ])
+
+        res.status(200).json({
+            status : "success",
+            totalQuantity : topProducts
+        })
+    }catch (e) {
+        res.status(200).json({
+            status : "fail",
+            data : e.toString()
+        })
+    }
+}
+
+//average-price
+
+exports.averagePrice = async (req,res) =>{
+    try {
+        let averagePrice = await salesModel.aggregate([{
+            $group : {
+                _id : null,
+                avgPrice : { $avg : "$price" }
+            }
+        }
+        ])
+
+        res.status(200).json({
+            status : "success",
+            avgPrice : averagePrice[0].avgPrice
+        })
+    }catch (e) {
+        res.status(200).json({
+            status : "fail",
+            data : e.toString()
+        })
+    }
+}
+
+
+
 
 
 
