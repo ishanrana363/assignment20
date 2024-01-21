@@ -29,8 +29,9 @@ exports.TotalRevenue = async (req,res) =>{
                     _id : null,
                     total : {
                         $sum : {
-                            $multiply : [
-                                "$quantity" , "price"
+                            $multiply: [
+                                { $toDouble: "$quantity" },
+                                { $toDouble: "$price" }
                             ]
                         }
                     }
@@ -48,7 +49,7 @@ exports.TotalRevenue = async (req,res) =>{
             data : e.toString()
         })
     }
-}
+};
 
 //quantity-by-product
 
@@ -87,7 +88,8 @@ exports.topProducts = async (req,res) =>{
                     total : {
                         $sum : {
                             $multiply : [
-                                "$quantity" , "price"
+                                { $toDouble: "$quantity" },
+                                { $toDouble: "$price" }
                             ]
                         }
                     }
@@ -156,7 +158,9 @@ exports.revenueByMonth =  async (req,res) =>{
                     },
                     total : {
                         $sum : {
-                            $multiply : [ "$price", "$quantity" ]
+                            $multiply : [
+                                { $toDouble: "$quantity" },
+                                { $toDouble: "$price" } ]
                         }
                     }
                 },

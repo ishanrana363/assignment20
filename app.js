@@ -5,7 +5,7 @@ const helmet = require("helmet")
 const hpp = require('hpp');
 const cors = require("cors")
 const mongoSanitize = require('express-mongo-sanitize');
-var cookieParser = require('cookie-parser')
+let cookieParser = require('cookie-parser')
 const mongoose = require('mongoose');
 
 
